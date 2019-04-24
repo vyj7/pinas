@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+<i class="fa fa-file-pdf-o" style="font-size:48px;color:red"></i>
+<i class="fa fa-file-movie-o" style="font-size:36px"></i>
+<i class="fa fa-file-audio-o" style="font-size:48px;color:balck"></i>
+<i class="fa fa-file-image-o" style="font-size:48px;color:red"></i>
+<i class="fa fa-file-powerpoint-o" style="font-size:48px;color:red"></i>
+<i class="fa fa-file-text-o" style="font-size:48px;color:red"></i>
+<i class="fa fa-file-word-o" style="font-size:48px;color:red"></i>
+<i class="fa fa-file" style="font-size:64px;color:red"></i>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>

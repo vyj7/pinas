@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+{% load staticfiles %}
+
+<html>
+<head>
+
+<meta charset="utf-8">
+<title>NAS|Raspberry PI</title>
+</head>
+<style>
+body {
+width:100%;
+background-color:#30ba55;
+}
+footer{
+clear:both;
+} 
+section {
+	width:100%
+}
+#navigation {
+	width:8%;
+	list-style:none;
+	color:white;
+	float:left;
+}
+#navigation li {
+	text-align:center;
+	display:inline-block;
+	background-color:#3085b5;
+	width:100%;
+	padding: 2px 2px 0px 2px;
+	margin:9% 0;
+	font-size:0.75em;
+	border-bottom:2px solid #0036ee;
+}
+#navigation li:hover {
+	color:#0000a5;
+}
+#list {
+	width:75%;
+	margin:1% 0;
+	list-style:none;
+	display:inline-block;
+	color:Black;
+	float:right;
+}
+#list li {
+	width:10%;
+	margin:1%;
+	font-size:0.75em;
+	float:left;
+}
+#list li img{
+	width:100%;
+}
+@media screen and (max-width:660px){
+#list li {
+	width:20%;
+}
+#navigation {
+	width:8%;
+	list-style:none;
+	color:white;
+	clear:both;
+}
+#navigation li {
+	text-align:center;
+	display:block;
+	background-color:#3085b5;
+	width:100%;
+	padding: 2px 2px 0px 2px;
+	font-size:0.75em;
+	border-bottom:2px solid #0036ee;
+}
+}
+@media screen and (max-width:300px){
+#list li {
+	width:25%;
+}
+}
+}
+
+        .ContextItem
+        {
+            background-color:White;
+            color:Black;
+            font-weight:normal;
+            
+            }
+        .ContextItem:hover
+        {
+            color:Black;
+            font-weight:bold;
+            
+        }
+</style>
+<header style="display:block; max-width:80%; margin:0 auto;">
+<form method='POST' action='/logout/{{user_id}}'>{% csrf_token%}
+</br>
+<input style="float:right;" type='submit' value = 'LogOut'/><br>
+</form>
+</header>
+<img src="{% static 'Koala.jpg' %}" alt="fe" style="height:100px; width:100px; border-radius:100%;">
+<table id="fileContextMenu" border="0" cellpadding="0" cellspacing="0" 
+            style="border: thin solid #808080; cursor: default; display:none;" width="130px" 
+            bgcolor="White">
+			<tr>
+                <td id="filedelete" class="ContextItem"><img src="http://st.depositphotos.com/1010146/2732/v/110/depositphotos_27326509-Delete-icon.jpg" alt="delete" width="16dpi" height="16dpi"/></img> Delete</td>
+            </tr>
+			<tr>
+                <td id="filedownload" class="ContextItem"><img src="https://cdn3.iconfinder.com/data/icons/meanicons-base/512/meanicons_25-512.png" alt="download" width="18dpi" height="16dpi"></img> Download</td>
+            </tr>
+        </table>
+<table id="contextMenu" border="0" cellpadding="0" cellspacing="0" 
+            style="border: thin solid #808080; cursor: default; display:none;" width="130px" 
+            bgcolor="White">
+			<tr>
+                <td id="folderdelete" class="ContextItem"><img src="http://st.depositphotos.com/1010146/2732/v/110/depositphotos_27326509-Delete-icon.jpg" alt="delete" width="16dpi" height="16dpi"/></img> Delete</td>
+            </tr>
+			<tr>
+                <td id="folderdownload" class="ContextItem"><img src="https://cdn3.iconfinder.com/data/icons/meanicons-base/512/meanicons_25-512.png" alt="download" width="18dpi" height="16dpi"></img> Download</td>
+            </tr>
+			<tr>
+                <td id="rename" class="ContextItem">Rename</td>
+            </tr>
+        </table>
+<table id="bodycontextMenu" border="0" cellpadding="0" cellspacing="0" 
+            style="border: thin solid #808080; cursor: default; display:none;" width="130px" 
+            bgcolor="White">
+            <tr>
+                <td id="create"  class="ContextItem"><img src="http://downloadicons.net/sites/default/files/new-folder-icon-42141.png" alt="new" width="18dpi" height="18dpi"/></img>  Create Folder</td>
+            </tr>
+			<tr>
+                <td id="upload"  class="ContextItem"><img src="http://www.materialui.co/resources//icons/file/file_upload_black_192x192.png" alt="new" width="20dpi" height="20dip"/></img>  Upload File</td>
+            </tr>
+			<tr>
+                <td id="copy" class="ContextItem"><img src="https://cdn4.iconfinder.com/data/icons/vectory-office/40/copy-512.png" alt="delete" width="20dpi" height="20dpi"/></img>Copy</td>
+            </tr>
+			<tr>
+                <td id="cut" class="ContextItem"><img src="http://365psd.com/images/premium/thumbs/153/scissors-icon-359979.jpg" alt="delete" width="16dpi" height="16dpi"/></img>  Cut</td>
+            </tr>
+			<tr>
+                <td id="muldelete" class="ContextItem"><img src="http://st.depositphotos.com/1010146/2732/v/110/depositphotos_27326509-Delete-icon.jpg" alt="delete" width="16dpi" height="16dpi"/></img>  Delete</td>
+            </tr>
+			<tr>
+                <td id="paste" class="ContextItem"><img src="https://www.iconexperience.com/_img/i_collection_png/512x512/plain/clipboard_paste.png" alt="delete" width="18dpi" height="18dpi"/></img>  Paste</td>
+            </tr>
+        </table>
+<body onclick="bodyhidemenu(event);"oncontextmenu="return bodyshowmenu(event)" onkeydown="return backpage(event)"onload="bodyopen()">
+<section><ul id="navigation">
+	<li onclick="createtab(event)" >Create Folder</li>
+	<li onclick="uploadtab(event)" >Upload File</li>
+	<li onclick="cuttab(event)">Cut</li>
+	<li onclick="copytab(event)">Copy</li>
+	<li onclick="pastetab(event)">Paste</li>
+	<li onclick="deletetab(event)">Delete</li>
+</ul>
+<ul id="list">
+{% for file in filenames %}
+<li onclick="fileHideMenu('fileContextMenu',event);" oncontextmenu="return fileShowMenu('fileContextMenu','{{file}}',event);"><img src="http://www.clker.com/cliparts/f/H/5/a/Q/y/text-file-icon-hi.png" alt="file">
+<input type='checkbox' value="{{file}}" onclick='handleClick(this,"{{file}}")'>
+{{file}}</li>
+ {% endfor %}
+{% for folder in foldernames %}
+<li ondblclick="func('{{folder}}')" onclick="HideMenu('contextMenu',event);" oncontextmenu="return ShowMenu('contextMenu','{{folder}}',event);"><img src="https://cdn0.iconfinder.com/data/icons/Free-Icons-Shimmer-01-Creative-Freedom/256/folder.png" alt="open">
+<input type='checkbox' value="{{folder}}" onclick='handleClick(this,"{{folder}}")'>
+{{folder}}</li>
+ {% endfor %}
+</ul></section>
+<footer>
+<p style="text-align:center; color:#000065">&copy; PINAS</p>
+</footer>
+<form id="fileupload" method="POST" action="/fileupload/{{user_id}}/{{owndir_id}}" enctype="multipart/form-data" align="centre">{% csrf_token%}
+<input type="file" name="files" id="inputfile" multiple onchange="document.getElementById('fileupload').submit();" style="display:none;"/>
+</form>
+Memory Used: <b>{{size}}%</b></br>
+<progress min="0" max="100" value="{{size}}"></progress></br>
+<script>
+function createtab(event){
+	event=event||window.event;
+	event.stopPropagation();
+	var tempfolder = prompt("Please enter name of Folder", "New Folder");
+	if(tempfolder!=null){var text="/foldercreate/{{user_id}}/{{owndir_id}}/" + tempfolder;
+	window.location.href=text;}
+	}
+function copytab(event){
+	event=event||window.event;
+	event.stopPropagation();
+	var text=checkedlist[0],i;
+	for (i=1;i<checkedlist.length;i++){
+	text+='|'+checkedlist[i];
+	}
+	var urltext="/foldercopy/{{user_id}}/{{owndir_id}}/"+text;
+	alert(urltext);
+	window.location.href=urltext;
+	};
+function cuttab(event){
+	event=event||window.event;
+	event.stopPropagation();
+	var text=checkedlist[0],i;
+	for (i=1;i<checkedlist.length;i++){
+	text+='|'+checkedlist[i];
+	}
+	var urltext="/foldercut/{{user_id}}/{{owndir_id}}/"+text;
+	alert(urltext);
+	window.location.href=urltext;
+	};
+function pastetab(event){
+	event=event||window.event;
+	event.stopPropagation();
+	var text="/folderpaste/{{user_id}}/{{owndir_id}}";
+	window.location.href=text;
+	};
+function deletetab(event){
+	event=event||window.event;
+	event.stopPropagation();
+	var text=checkedlist[0],i;
+	for (i=1;i<checkedlist.length;i++){
+	text+='|'+checkedlist[i];
+	}
+	var urltext="/muldelete/{{user_id}}/{{owndir_id}}/"+text;
+	alert(urltext);
+	window.location.href=urltext;
+	};
+function uploadtab(event){
+	event=event||window.event;
+	event.stopPropagation();
+	document.getElementById('inputfile').click();	
+	};
+function bodyopen(){
+checkedlist=[];
+if({{value}}==1){
+alert("Directory With Same Name Already Exists");
+}}
+function backpage(e){
+e=e||window.event;
+var charcode=e.which||e.keycode;
+if(e.which==8){window.location.href="/backpage/{{user_id}}/{{owndir_id}}";
+	return false;}
+}
+var checkedlist=[];
+function handleClick(mouse,name){
+if(mouse.checked==true){
+checkedlist.push(name);
+}
+else{
+index=checkedlist.indexOf(name)
+checkedlist.splice(index,1)
+}
+//alert(checkedlist);
+}
+function bodyshowmenu(e){
+	document.getElementById('create').onclick=function(event){
+				event=event||window.event;
+				event.stopPropagation();
+				var tempfolder = prompt("Please enter name of Folder", "New Folder");
+				if(tempfolder!=null){var text="/foldercreate/{{user_id}}/{{owndir_id}}/" + tempfolder;
+				window.location.href=text;}
+				};
+	document.getElementById('upload').onclick=function(event){
+				event=event||window.event;
+				event.stopPropagation();
+				document.getElementById('inputfile').click();	
+				};
+	document.getElementById('paste').onclick=function(event){
+			event=event||window.event;
+			event.stopPropagation();
+														var text="/folderpaste/{{user_id}}/{{owndir_id}}";
+														window.location.href=text;
+														};
+	document.getElementById('copy').onclick=function(event){
+			event=event||window.event;
+			event.stopPropagation();
+														var text=checkedlist[0],i;
+														for (i=1;i<checkedlist.length;i++){
+														text+='|'+checkedlist[i];
+														}
+														var urltext="/foldercopy/{{user_id}}/{{owndir_id}}/"+text;
+														alert(urltext);
+														window.location.href=urltext;
+														};
+	document.getElementById('cut').onclick=function(event){
+			event=event||window.event;
+			event.stopPropagation();
+														var text=checkedlist[0],i;
+														for (i=1;i<checkedlist.length;i++){
+														text+='|'+checkedlist[i];
+														}
+														var urltext="/foldercut/{{user_id}}/{{owndir_id}}/"+text;
+														alert(urltext);
+														window.location.href=urltext;
+														};
+	document.getElementById('muldelete').onclick=function(event){
+			event=event||window.event;
+			event.stopPropagation();
+														var text=checkedlist[0],i;
+														for (i=1;i<checkedlist.length;i++){
+														text+='|'+checkedlist[i];
+														}
+														var urltext="/muldelete/{{user_id}}/{{owndir_id}}/"+text;
+														alert(urltext);
+														window.location.href=urltext;
+														};
+	document.getElementById('fileContextMenu').style.display = 'none';
+	document.getElementById('contextMenu').style.display = 'none';
+	e=e||window.event;
+	var posx = e.clientX + 'px';
+	var posy = e.clientY + 'px';
+	document.getElementById('bodycontextMenu').style.position = 'absolute';
+	document.getElementById('bodycontextMenu').style.display = 'inline';	
+	document.getElementById('bodycontextMenu').style.left = posx;
+	document.getElementById('bodycontextMenu').style.top = posy;
+	var jqContext = '#' + 'bodycontextMenu';
+	console.log("body menu showed")
+	return false;
+	}
+function bodyhidemenu(e) {
+            document.getElementById('bodycontextMenu').style.display = 'none';
+			HideMenu('contextMenu')
+			fileHideMenu('fileContextMenu')
+        }
+function func(name) {
+	var i,j={{data|safe}},text,path="";
+	if('{{osname}}'=="Windows")
+	{path="{{main_path}}"+"\\"+name;
+	console.log('If Inside')}
+	else if('{{osname}}'=="Linux")
+	{path="{{main_path}}"+"/"+name;}
+	for (i in j)
+	{
+	if(j[i]['0']==path)
+	{
+	text="/flupld/{{user_id}}/"+i;
+	window.location.href=text
+	break;}
+	}
+}
+     function ShowMenu(control,name,e) {
+			e=e||window.event;
+			e.stopPropagation();
+			document.getElementById('folderdownload').onclick=function(event){
+			event=event||window.event;
+			event.stopPropagation();
+														var text="/folderdownload/{{user_id}}/{{owndir_id}}/"+name;
+														window.location.href=text;
+														};
+			document.getElementById('rename').onclick=function(event){
+			event=event||window.event;
+			event.stopPropagation();
+														var newname = prompt("Please enter New name", "New Folder");
+														if(newname!=null){var text="/folderrename/{{user_id}}/{{owndir_id}}/"+name+"/"+newname;
+														window.location.href=text;}
+														};
+			document.getElementById('folderdelete').onclick=function(event){
+			event=event||window.event;
+			event.stopPropagation();
+														var i,j={{data|safe}},text,path="";
+														if('{{osname}}'=="Windows")
+														{path="{{main_path}}"+"\\"+name;
+														console.log('If Inside')}
+														else if('{{osname}}'=="Linux")
+														{path="{{main_path}}"+"/"+name;}
+														for (i in j)
+														{			
+														if(j[i]['0']==path)
+														{
+														text="/folderdelete/{{user_id}}/{{owndir_id}}/" + i;
+														window.location.href=text	
+														break;}
+														}};
+			document.getElementById('bodycontextMenu').style.display = 'none';
+			document.getElementById('fileContextMenu').style.display = 'none';
+            var posx = e.clientX + 'px';
+            var posy = e.clientY + 'px';
+            document.getElementById(control).style.position = 'absolute';
+            document.getElementById(control).style.display = 'inline';
+            document.getElementById(control).style.left = posx;
+            document.getElementById(control).style.top = posy;
+            var jqContext = '#' + control;
+			console.log("folder menu showed")
+			return false;
+        }
+        function HideMenu(control,e) {
+            document.getElementById(control).style.display = 'none';
+
+        }
+     function fileShowMenu(control,name,e) {
+			e=e||window.event;
+			e.stopPropagation();
+			document.getElementById('filedownload').onclick=function(event){
+			event=event||window.event;
+			event.stopPropagation();
+														var text="/filedownload/{{user_id}}/{{owndir_id}}/"+name;
+														window.location.href=text;
+														};
+			document.getElementById('filedelete').onclick=function(event){
+			event=event||window.event;
+			event.stopPropagation();
+														var text;
+														text="/filedelete/{{user_id}}/{{owndir_id}}/" + name;
+														window.location.href=text
+														};
+			document.getElementById('bodycontextMenu').style.display = 'none';
+			document.getElementById('contextMenu').style.display = 'none';
+            var posx = e.clientX + 'px';
+            var posy = e.clientY + 'px';
+            document.getElementById(control).style.position = 'absolute';
+            document.getElementById(control).style.display = 'inline';
+            document.getElementById(control).style.left = posx;
+            document.getElementById(control).style.top = posy;
+            var jqContext = '#' + control;
+			console.log("file menu showed")
+			return false;
+        }
+        function fileHideMenu(control,e) {
+            document.getElementById(control).style.display = 'none';
+
+        }
+</script>
+</body>
+</html>
